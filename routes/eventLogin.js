@@ -5,7 +5,7 @@ const sql = require('mssql');
 const config = require('../config_weblayout')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const secretKey = '89fff520be5e14b88c80a8ae4100ca7127e1ba0516977065895d4c241bda5173'
+const secretKey = 'XXXXXXXXXXXXXXXXXXXXX'
 
 router.get('/list/user', async (req, res) => {
     try{
