@@ -20,7 +20,7 @@ module.exports = {
         server: "CYF_SERVER_03",
         database: "CYF_LIV_APP",
         user: "sa",
-        password: "SysAdm!n",
+        password: "XXXXXXXX",
         options: {
             encrypt: sqlEncrypt,
             enableArithAbort: true 
