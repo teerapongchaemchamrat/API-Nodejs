@@ -22,31 +22,22 @@ router.get('/web',function(req,res){
     res.sendFile(path.resolve(__dirname,'D:/Application_API/Delivery.html'))
 })
 
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'DeliveryF1'); // Specify the destination directory for uploads
+    cb(null, 'DeliveryF1'); 
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname); // Use the original filename
+    cb(null, file.originalname);
   }
 });
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'D:/Web-delivery/build/ImageF1'); // Specify the destination directory for uploads
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname); // Use the original filename
-//   }
-// });
 
   const upload = multer({ storage: storage });
   
   const config = {
-    server: '192.168.10.114',
+    server: 'XXX.XXX.XX.XXX',
     database: 'Application',
     user: 'sa',
-    password: 'Cyf027065055',
+    password: 'XXXXXXXXXX',
     options: {
       trustedConnection: true,
       enableArithAbort: true,
@@ -67,13 +58,11 @@ const storage = multer.diskStorage({
       }
   
       const baseUploadDir = path.join("D:/Application_API", 'DeliveryF1'); // Assuming 'uploads' is your base directory
-      //const baseUploadDir = path.join("D:/Web-delivery/build", 'ImageF1'); // Assuming 'uploads' is your base directory
       const dateFolder = new Date().toISOString().slice(0, 10);
       const coFolder = path.join(baseUploadDir, dateFolder, Co);
       const lineFolder = path.join(coFolder, Line);
       const linesubFolder = path.join(lineFolder, Linesub);
   
-      // Create directories if they don't exist
       try {
               if (!fs.existsSync(coFolder)) {
                 await fs.promises.mkdir(coFolder, { recursive: true });
