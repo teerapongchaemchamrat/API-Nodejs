@@ -16,10 +16,10 @@ router.get("/job", eventControll_getpicture.getJobRemain);
 
 // SQL Server configuration
 const config = {
-    server: '192.168.10.114',
+    server: 'XXX.XXX.XX.XXX',
     database: 'App_PUR',
     user: 'sa',
-    password: 'Cyf027065055',
+    password: 'XXXXXXXXXX',
     options: {
       encrypt: false, // For secure connection
       trustServerCertificate: true,
@@ -49,9 +49,6 @@ const config = {
   
       // Use the connection pool to query the database
       pool.connect().then((pool) => {
-        // Prepare the SQL statement
-        // const query = `INSERT INTO [dbo].[WIP_Scan] ([Job], [Item], [Quantity], [Recipient], [Camera]) 
-        //                VALUES (@Job, @Item, @Quantity, @Recipient, @Camera)`;
 
         const query = `INSERT INTO [dbo].[Scan_WIP] ([Job], [Item], [Quantity], [Recipient], [Camera], [Picture])
         SELECT @Job, @Item, @Quantity, @Recipient, @Camera, [picture]
@@ -109,9 +106,6 @@ const config = {
   
       // Use the connection pool to query the database
       pool.connect().then((pool) => {
-        // Prepare the SQL statement
-        // const query = `INSERT INTO [dbo].[WIP_Scan] ([Job], [Item], [Quantity], [Recipient], [Camera]) 
-        //                VALUES (@Job, @Item, @Quantity, @Recipient, @Camera)`;
 
         const query = `INSERT INTO [dbo].[Scan_WIP_F2] ([Job], [Item], [Quantity], [Recipient], [Camera], [Picture])
         SELECT @Job, @Item, @Quantity, @Recipient, @Camera, [picture]
