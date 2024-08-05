@@ -17,7 +17,7 @@ module.exports = {
     host: HOST,
     url: HOST_URL,
     sql: {
-        server: "CYF_SERVER_03",
+        server: "XXXXXXXXXXX",
         database: "CYF_LIV_APP",
         user: "sa",
         password: "XXXXXXXX",
