@@ -1,0 +1,7 @@
+(node:25916) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Error: ENOENT: no such file or directory, rename 'D:\Application_API\DeliveryF1\JPEG_20240802_093951_1000532815875741468.jpg' -> 'D:\Application_API\DeliveryF1\2024-08-02\C24-028184\1\20\JPEG_20240802_093951_1000532815875741468.jpg'
+Error: ENOENT: no such file or directory, rename 'D:\Application_API\DeliveryF1\JPEG_20240802_102916_4610356360459776713.jpg' -> 'D:\Application_API\DeliveryF1\2024-08-02\C24-028161\1\10\JPEG_20240802_102916_4610356360459776713.jpg'
+Error: ENOENT: no such file or directory, rename 'D:\Application_API\DeliveryF1\JPEG_20240802_103010_6504848691952127884.jpg' -> 'D:\Application_API\DeliveryF1\2024-08-02\C24-028209\1\8\JPEG_20240802_103010_6504848691952127884.jpg'
+Error: ENOENT: no such file or directory, rename 'D:\Application_API\DeliveryF1\JPEG_20240802_111140_2239840936947857994.jpg' -> 'D:\Application_API\DeliveryF1\2024-08-02\C24-028568\1\3\JPEG_20240802_111140_2239840936947857994.jpg'
+Error: ENOENT: no such file or directory, rename 'D:\Application_API\DeliveryF1\JPEG_20240802_114720_3202526806666493788.jpg' -> 'D:\Application_API\DeliveryF1\2024-08-02\C24-028455\1\6\JPEG_20240802_114720_3202526806666493788.jpg'

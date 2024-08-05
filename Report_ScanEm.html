@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equic="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale1.0">
+    <title>Scan Employee Check in</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>-->
+    <!--<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>-->
+    <style>
+        .button {
+            background-color: #696868; /* Set the default background color */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button.clicked {
+            background-color: #45a049; /* Set the background color when clicked */
+        }
+        button{
+            cursor: pointer;
+        }
+        .loader-text {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid blue;
+            border-right: 16px solid green;
+            border-bottom: 16px solid red;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>  
+<body>
+    <!-- Loader -->
+    <div id="loader" style="display: none;">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="loader-text">
+            <div class="loader"></div>
+            <h1 >Loading...</h1>
+        </div>
+    </div>
+
+    <br></br>
+    <h1 class="text-center">Employee scan data Factory 1</h1><br></br>
+
+    <div class="container">
+        <h5 class="text-center">
+            Date:
+            <input type="date">&nbsp;&nbsp;
+            <button type="button" id="searchButton" class="button">Search</button>
+            <!-- <button type="button" id="matchButton" class="button">Match</button>
+            <button type="button" id="nomatchButton" class="button">No Match</button>
+            <button type="button" id="exportButton" class="button">Export to PDF</button> -->
+            <button type="button" id="exportExcel" class="button">Export to Excel</button>
+        </h1>
+    </div>
+    
+    <div class="table-responsive">
+        <table id="myTable" class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Employee ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Stamp1(Bplus)</th>
+                    <th scope="col">Stamp2(Bplus)</th>
+                    <th scope="col">Stamp3(Bplus)</th>
+                    <th scope="col">Stamp4(Bplus)</th>
+                    <th scope="col">Scan at location</th>
+                    <th scope="col">Time Scan</th>
+                </tr>
+            </thead>
+            <tbody id="table_body">
+                
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+
+        function handleButtonClick(buttonId) {
+            // Remove 'clicked' class from all buttons
+            document.getElementById("searchButton").classList.remove("clicked");
+            // document.getElementById("matchButton").classList.remove("clicked");
+            // document.getElementById("nomatchButton").classList.remove("clicked");
+
+            // Add 'clicked' class to the clicked button
+            document.getElementById(buttonId).classList.add("clicked");
+        }
+
+        let valueType = "Total";
+
+        document.getElementById("searchButton").addEventListener("click", function() {
+
+        document.getElementById("loader").style.display = "block";
+
+        valueType = "Total";
+        handleButtonClick("searchButton");
+        let dateValue = document.querySelector("input[type='date']").value;
+        //console.log("params : " + dateValue);
+
+        if (dateValue === ''){
+            dateValue = null
+        }
+
+        // Construct the API URL with the parameters
+        let apiUrl = '';
+
+        if (dateValue !== null) {
+            const inputDate = new Date(dateValue);
+
+            const day = String(inputDate.getDate()).padStart(2, '0');
+            const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const year = inputDate.getFullYear();
+
+            const formattedDate = `${day}-${month}-${year}`;
+
+            apiUrl = `http://49.0.65.4:3002/scan/total/${formattedDate}`;
+        } 
+
+        fetch(apiUrl)
+        .then((response) => {
+            if (!response.ok) {
+                console.error(response);
+                alert("Input incomplete!!!");
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then((ObjectData) => {
+            //console.log(ObjectData);
+            let tableData = "";
+            ObjectData.forEach((values) => {
+
+                tableData += `
+                <tr>
+                    <td><h5>${values.No !== null ? values.No : ''}</h5></td>
+                    <td><h5>${values.SSN !== null ? values.SSN : ''}</h5></td>
+                    <td><h5>${values.Name !== null ? values.Name : ''}</h5></td>
+                    <td><h5>${values.Surname !== null ? values.Surname : ''}</h5></td>
+                    <td><h5>${values.Child_code !== null ? values.Child_code : ''}</h5></td>
+                    <td><h5>${values.Stamp_1 !== null ? values.Stamp_1 : ''}</h5></td>
+                    <td><h5>${values.Stamp_2 !== null ? values.Stamp_2 : ''}</h5></td>
+                    <td><h5>${values.Stamp_3 !== null ? values.Stamp_3 : ''}</h5></td>
+                    <td><h5>${values.Stamp_4 !== null ? values.Stamp_4 : ''}</h5></td>
+                    <td><h5>${values.Location !== null ? values.Location : ''}</h5></td>
+                    <td><h5>${values.Time_scan !== null ? values.Time_scan : ''}</h5></td>
+                </tr>`;
+            });
+
+            document.getElementById("table_body").innerHTML = tableData;
+
+            document.getElementById("loader").style.display = "none";
+
+            
+        })
+        .catch((error) => {
+            console.error(error);
+            alert("Error fetching data");
+            document.getElementById("loader").style.display = "none";
+        });
+
+    });
+
+    //     document.getElementById("matchButton").addEventListener("click", function() {
+    //         document.getElementById("loader").style.display = "block";
+
+    //         valueType = "Match";
+    //         let dateValue = document.querySelector("input[type='date']").value;
+    //         handleButtonClick("matchButton");
+    //         //console.log("params : " + dateValue);
+
+    //         if (dateValue === ''){
+    //             dateValue = null
+    //         }
+
+    //         // Construct the API URL with the parameters
+    //         let apiUrl = '';
+
+    //         if (dateValue !== null) {
+    //             const inputDate = new Date(dateValue);
+
+    //             const day = String(inputDate.getDate()).padStart(2, '0');
+    //             const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    //             const year = inputDate.getFullYear();
+
+    //             const formattedDate = `${day}-${month}-${year}`;
+
+    //             apiUrl = `http://49.0.65.4:3002/scan/total/match/${formattedDate}`;
+    //         } 
+
+    //         fetch(apiUrl)
+    //         .then((response) => {
+    //             if (!response.ok) {
+    //                 console.error(response);
+    //                 alert("Input incomplete!!!");
+    //                 throw new Error('Network response was not ok');
+    //             }
+    //             return response.json();
+    //         })
+    //         .then((ObjectData) => {
+    //             //console.log(ObjectData);
+    //             let tableData = "";
+    //             ObjectData.forEach((values, index) => {
+
+    //                 tableData += `
+    //                 <tr>
+    //                     <td><h5>${index + 1}<h5></td>
+    //                     <td><h5>${values.employeeID}</h5></td>
+    //                     <td><h5>${values.Name}</h5></td>
+    //                     <td><h5>${values.Surname}</h5></td>
+    //                     <td><h5>${values.Child_code}</h5></td>
+    //                     <td><h5>${values.Location}</h5></td>
+    //                     <td><h5>${values.Stamp_1}</h5></td>
+    //                     <td><h5>${values.Time_scan}</h5></td>
+    //                 </tr>`;
+    //             });
+
+    //             document.getElementById("table_body").innerHTML = tableData;
+
+    //             document.getElementById("loader").style.display = "none";
+
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //             alert("Error fetching data");
+    //             document.getElementById("loader").style.display = "none";
+    //         });
+    // });
+
+    // document.getElementById("nomatchButton").addEventListener("click", function() {
+    //     document.getElementById("loader").style.display = "block";
+
+    //         valueType = "No Match";
+    //         let dateValue = document.querySelector("input[type='date']").value;
+    //         handleButtonClick("nomatchButton");
+    //         //console.log("params : " + dateValue);
+
+    //         if (dateValue === ''){
+    //             dateValue = null
+    //         }
+
+    //         // Construct the API URL with the parameters
+    //         let apiUrl = '';
+
+    //         if (dateValue !== null) {
+    //             const inputDate = new Date(dateValue);
+
+    //             const day = String(inputDate.getDate()).padStart(2, '0');
+    //             const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    //             const year = inputDate.getFullYear();
+
+    //             const formattedDate = `${day}-${month}-${year}`;
+
+    //             apiUrl = `http://49.0.65.4:3002/scan/total/nomatch/${formattedDate}`;
+    //         } 
+
+    //         fetch(apiUrl)
+    //         .then((response) => {
+    //             if (!response.ok) {
+    //                 console.error(response);
+    //                 alert("Input incomplete!!!");
+    //                 throw new Error('Network response was not ok');
+    //             }
+    //             return response.json();
+    //         })
+    //         .then((ObjectData) => {
+    //             //console.log(ObjectData);
+    //             let tableData = "";
+    //             ObjectData.forEach((values, index) => {
+
+    //                 tableData += `
+    //                 <tr>
+    //                     <td><h5>${index + 1}<h5></td>
+    //                     <td><h5>${values.employeeID}</h5></td>
+    //                     <td><h5>${values.Name}</h5></td>
+    //                     <td><h5>${values.Surname}</h5></td>
+    //                     <td><h5>${values.Child_code}</h5></td>
+    //                     <td><h5>${values.Location}</h5></td>
+    //                     <td><h5>${values.Stamp_1}</h5></td>
+    //                     <td><h5>${values.Time_scan}</h5></td>
+    //                 </tr>`;
+    //             });
+
+    //             document.getElementById("table_body").innerHTML = tableData;
+
+    //             document.getElementById("loader").style.display = "none";
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //             alert("Error fetching data");
+    //             document.getElementById("loader").style.display = "none";
+    //         });
+    // });
+
+    document.getElementById("exportExcel").addEventListener("click", function() {
+        const table = document.getElementById("myTable");
+        const rows = table.querySelectorAll("tr");
+
+        // Check if the table has any rows
+        if (rows.length === 0 || (rows.length === 1 && rows[0].querySelectorAll("td").length === 0)) {
+            alert("No data available to export.");
+            return; // Exit the function if no data is available
+        }
+
+        // Create a new Excel workbook
+        const workbook = XLSX.utils.book_new();
+        const ws_data = [];
+
+        // Extract header row data
+        const headerRowData = [];
+        table.querySelectorAll("thead th").forEach(cell => {
+            headerRowData.push(cell.innerText);
+        });
+        ws_data.push(headerRowData);
+
+        // Loop through each row and extract cell data
+        rows.forEach(row => {
+            const rowData = [];
+            row.querySelectorAll("td").forEach(cell => {
+                rowData.push(cell.innerText);
+            });
+
+            // Check if rowData has any content
+            if (rowData.some(cellData => cellData.trim() !== '')) {
+                ws_data.push(rowData);
+            }
+        });
+
+        // Add the extracted data to a new worksheet
+        const ws = XLSX.utils.aoa_to_sheet(ws_data);
+        XLSX.utils.book_append_sheet(workbook, ws, "Sheet1");
+
+        // Save the workbook as an Excel file
+        let dateValue = document.querySelector("input[type='date']").value;
+        const inputDate = new Date(dateValue);
+
+        const day = String(inputDate.getDate()).padStart(2, '0');
+        const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const year = inputDate.getFullYear();
+        const formattedDate = `${day}-${month}-${year}`;
+        XLSX.writeFile(workbook, "table_data_f1 "+ formattedDate + ".xlsx");
+    });
+
+        
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</body>  
+</html>

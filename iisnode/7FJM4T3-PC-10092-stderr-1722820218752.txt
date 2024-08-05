@@ -1,0 +1,6 @@
+(node:10092) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Error: ENOENT: no such file or directory, rename 'D:\Application_API\DeliveryF1\JPEG_20240805_085414_8904203621309893161.jpg' -> 'D:\Application_API\DeliveryF1\2024-08-05\C24-028117\1\4\JPEG_20240805_085414_8904203621309893161.jpg'
+Error: ENOENT: no such file or directory, rename 'D:\Application_API\DeliveryF1\JPEG_20240805_092032_6881566000478400689.jpg' -> 'D:\Application_API\DeliveryF1\2024-08-05\C24-028136\1\4\JPEG_20240805_092032_6881566000478400689.jpg'
+Error: ENOENT: no such file or directory, rename 'D:\Application_API\DeliveryF1\JPEG_20240805_102010_2623514300518387820.jpg' -> 'D:\Application_API\DeliveryF1\2024-08-05\C24-028176\1\10\JPEG_20240805_102010_2623514300518387820.jpg'
+Error: ENOENT: no such file or directory, rename 'D:\Application_API\DeliveryF1\JPEG_20240805_111139_7584957818435553794.jpg' -> 'D:\Application_API\DeliveryF1\2024-08-05\C24-028547\1\4\JPEG_20240805_111139_7584957818435553794.jpg'

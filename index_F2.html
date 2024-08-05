@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Report Employee Check in</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .texttitle {
+        font-size: 20px;
+        text-align: center;
+        
+      }
+      .chartMenu {
+        width: 100vw;
+        height: 40px;
+        background: rgba(38, 160, 241, 0.2);
+        color: rgb(8, 8, 8);
+        text-align: center;
+      }
+      .chartMenu p {
+        padding: 10px;
+        font-size: 50px;
+      }
+      .chartCard {
+        width: 100vw;
+        height: calc(100vh - 40px);
+        background: rgba(38, 160, 241, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chartBox {
+        width: 1300px;
+        padding: 20px;
+        border-radius: 20px;
+        border: solid 3px rgba(54, 162, 235, 1);
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chartMenu">
+      <br>
+      <p>The graph shows Factory 2 employees today.</p>
+    </div>
+    <div class="chartCard">
+      <div class="chartBox" >
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+    <!-- <script type="text/javascript" src="app.js"></script> -->
+    <script>
+    let LocationEmployee = [];
+    let numberEmployee = [];
+    let myChart = null ;
+
+    async function drawChart(){
+        const apiLink = 'http://49.0.65.4:3002/scanf2/chart/data';
+
+        const response = await fetch(apiLink)
+          
+        console.log(response)
+        const datapoints = await response.json()
+        console.log(datapoints);
+
+        const numbersEm = datapoints.map((nums) => nums.employeeID)
+        console.log(numbersEm)
+        numberEmployee = numbersEm
+
+        const locationEm = datapoints.map((local) => local.Location)
+        console.log(locationEm)
+        LocationEmployee = locationEm
+
+        console.log("don't trust anyone")
+
+        
+        // setup 
+    const data = {
+      labels: LocationEmployee,
+      datasets: [{
+        label: 'Number of employee',
+        data: numberEmployee,
+        backgroundColor: 'rgba(255 ,26, 104, 0.2)',
+        borderColor: 'rgba(255, 26, 104, 1)',
+        borderWidth: 1
+      }]
+    };
+
+    // config 
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    if (myChart) {
+        myChart.destroy();
+    }
+
+    // render init block
+    myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+
+    // Instantly assign Chart.js version
+    // const chartVersion = document.getElementById('chartVersion');
+    // chartVersion = Chart.version;
+  }
+
+    drawChart();
+
+    setInterval(() => {
+        drawChart();
+    }, 600000);
+    
+    </script>
+    
+  </body>
+</html>

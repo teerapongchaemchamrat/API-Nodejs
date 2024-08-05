@@ -5,6 +5,7 @@ const sql = require('mssql');
 
 const getProductOut = async () => {
     try {
+        sql.close();
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('BoxEventsOut');
         const getList = await pool.request().query(sqlQueries.get);
@@ -16,6 +17,7 @@ const getProductOut = async () => {
 
 const getByIdOut = async(BoxId) => {
     try {
+        sql.close();
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('BoxEventsOut');
         const event = await pool.request()
@@ -29,6 +31,7 @@ const getByIdOut = async(BoxId) => {
 
 const creatProductOut = async (Box) => {
     try {
+        sql.close();
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('BoxEventsOut');
         const insertProduct = await pool.request()
@@ -44,6 +47,7 @@ const creatProductOut = async (Box) => {
 }
 const updateProductbyIdOut = async (BoxId, data) => {
     try {
+        sql.close();
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('BoxEventsOut');
         const update = await pool.request()
