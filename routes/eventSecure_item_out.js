@@ -28,10 +28,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const config = {
-    server: '192.168.10.114',
+    server: 'XXX.XXX.XX.XXX',
     database: 'Application',
     user: 'sa',
-    password: 'Cyf027065055',
+    password: 'XXXXXXXX',
     options: {
       trustedConnection: true,
       enableArithAbort: true,
