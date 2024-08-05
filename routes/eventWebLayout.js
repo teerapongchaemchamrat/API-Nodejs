@@ -20,10 +20,6 @@ const fileStorageEngine = multer.diskStorage({
     cb(null, "D:/WebLayout-react/public/image");
     cb(null, "D:/WebLayout-react/build/image");
   },
-  // filename: (req, file, cb) => {
-  //   const originalname = encodeURIComponent(file.originalname);
-  //   cb(null, decodeURIComponent(originalname));
-  // }
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   }
@@ -95,31 +91,6 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
-// const fileStorageEngineBG = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "D:/Project Web/react/myreact/public/image");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, file.originalname);
-//   }
-// });
-
-// const fileFilter = (req, file, cb) => {
-//   if (file.mimetype === 'image/svg+xml') {
-//     cb(null, true); // Accept the file
-//   } else {
-//     cb(new Error('Only SVG files are allowed!'), false); // Reject the file
-//   }
-// };
-
-// const uploadBG = multer({
-//   limits: {
-//     fileSize: 20 * 1024 * 1024
-//   },
-//   storage: fileStorageEngineBG,
-//   fileFilter: fileFilter
-// });
-
 router.post('/upload/bg', upload.single('image'), async (req, res) => {
   try{
     console.log(req.file);
@@ -146,11 +117,10 @@ router.post('/upload/bg/new', upload.single('image'), async (req, res) => {
     console.log(req.file);
   sql.close();
   const imagePath = `D:/WebLayout-react/public/image/${req.file.originalname}`;
-  //const values_select = req.body.values_select;
+  
   const Uf_asset_Location = req.body.Uf_asset_Location;
   const pool = await sql.connect(config.sql);
   const result = await pool.request()
-                  //.input('values_select', sql.NVarChar(30), values_select)
                   .input('Uf_asset_Location', sql.NVarChar(30), Uf_asset_Location)
                   .input('image_location', sql.NVarChar(200), imagePath)
                   .query(`UPDATE [Location_controll] 
@@ -164,13 +134,9 @@ router.post('/upload/bg/new', upload.single('image'), async (req, res) => {
   }
 });
 
-// router.post('/multiple', upload.array("images", 3), (req, res) => {
-//   console.log(req.files);
-//   res.send("Multiple Files upload Success");
-// });
-
+//send line notify
 const axios = require('axios');
-const LINE_NOTIFY_ACCESS_TOKEN = '4a8DgwA1Uw4MYDmLvO0bCqLTkzDRLEcCpc8SchPqX3N';
+const LINE_NOTIFY_ACCESS_TOKEN = 'XXXXXXXXXXXXX';
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
