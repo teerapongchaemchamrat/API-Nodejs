@@ -1,6 +1,6 @@
 'use strict';
 
-const BoxDataIn = require('../data/BoxEventsIn');
+const BoxDataIn = require('../data/BoxCtrl');
 
 
 const getAllProductIn = async (req, res, next) => {
