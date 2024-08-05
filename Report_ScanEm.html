@@ -84,9 +84,6 @@
             Date:
             <input type="date">&nbsp;&nbsp;
             <button type="button" id="searchButton" class="button">Search</button>
-            <!-- <button type="button" id="matchButton" class="button">Match</button>
-            <button type="button" id="nomatchButton" class="button">No Match</button>
-            <button type="button" id="exportButton" class="button">Export to PDF</button> -->
             <button type="button" id="exportExcel" class="button">Export to Excel</button>
         </h1>
     </div>
@@ -117,12 +114,7 @@
     <script>
 
         function handleButtonClick(buttonId) {
-            // Remove 'clicked' class from all buttons
             document.getElementById("searchButton").classList.remove("clicked");
-            // document.getElementById("matchButton").classList.remove("clicked");
-            // document.getElementById("nomatchButton").classList.remove("clicked");
-
-            // Add 'clicked' class to the clicked button
             document.getElementById(buttonId).classList.add("clicked");
         }
 
@@ -153,7 +145,7 @@
 
             const formattedDate = `${day}-${month}-${year}`;
 
-            apiUrl = `http://49.0.65.4:3002/scan/total/${formattedDate}`;
+            apiUrl = `http://XXX.XXX.XX.XXX:XXX/scan/total/${formattedDate}`;
         } 
 
         fetch(apiUrl)
@@ -199,138 +191,6 @@
         });
 
     });
-
-    //     document.getElementById("matchButton").addEventListener("click", function() {
-    //         document.getElementById("loader").style.display = "block";
-
-    //         valueType = "Match";
-    //         let dateValue = document.querySelector("input[type='date']").value;
-    //         handleButtonClick("matchButton");
-    //         //console.log("params : " + dateValue);
-
-    //         if (dateValue === ''){
-    //             dateValue = null
-    //         }
-
-    //         // Construct the API URL with the parameters
-    //         let apiUrl = '';
-
-    //         if (dateValue !== null) {
-    //             const inputDate = new Date(dateValue);
-
-    //             const day = String(inputDate.getDate()).padStart(2, '0');
-    //             const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    //             const year = inputDate.getFullYear();
-
-    //             const formattedDate = `${day}-${month}-${year}`;
-
-    //             apiUrl = `http://49.0.65.4:3002/scan/total/match/${formattedDate}`;
-    //         } 
-
-    //         fetch(apiUrl)
-    //         .then((response) => {
-    //             if (!response.ok) {
-    //                 console.error(response);
-    //                 alert("Input incomplete!!!");
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then((ObjectData) => {
-    //             //console.log(ObjectData);
-    //             let tableData = "";
-    //             ObjectData.forEach((values, index) => {
-
-    //                 tableData += `
-    //                 <tr>
-    //                     <td><h5>${index + 1}<h5></td>
-    //                     <td><h5>${values.employeeID}</h5></td>
-    //                     <td><h5>${values.Name}</h5></td>
-    //                     <td><h5>${values.Surname}</h5></td>
-    //                     <td><h5>${values.Child_code}</h5></td>
-    //                     <td><h5>${values.Location}</h5></td>
-    //                     <td><h5>${values.Stamp_1}</h5></td>
-    //                     <td><h5>${values.Time_scan}</h5></td>
-    //                 </tr>`;
-    //             });
-
-    //             document.getElementById("table_body").innerHTML = tableData;
-
-    //             document.getElementById("loader").style.display = "none";
-
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //             alert("Error fetching data");
-    //             document.getElementById("loader").style.display = "none";
-    //         });
-    // });
-
-    // document.getElementById("nomatchButton").addEventListener("click", function() {
-    //     document.getElementById("loader").style.display = "block";
-
-    //         valueType = "No Match";
-    //         let dateValue = document.querySelector("input[type='date']").value;
-    //         handleButtonClick("nomatchButton");
-    //         //console.log("params : " + dateValue);
-
-    //         if (dateValue === ''){
-    //             dateValue = null
-    //         }
-
-    //         // Construct the API URL with the parameters
-    //         let apiUrl = '';
-
-    //         if (dateValue !== null) {
-    //             const inputDate = new Date(dateValue);
-
-    //             const day = String(inputDate.getDate()).padStart(2, '0');
-    //             const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    //             const year = inputDate.getFullYear();
-
-    //             const formattedDate = `${day}-${month}-${year}`;
-
-    //             apiUrl = `http://49.0.65.4:3002/scan/total/nomatch/${formattedDate}`;
-    //         } 
-
-    //         fetch(apiUrl)
-    //         .then((response) => {
-    //             if (!response.ok) {
-    //                 console.error(response);
-    //                 alert("Input incomplete!!!");
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then((ObjectData) => {
-    //             //console.log(ObjectData);
-    //             let tableData = "";
-    //             ObjectData.forEach((values, index) => {
-
-    //                 tableData += `
-    //                 <tr>
-    //                     <td><h5>${index + 1}<h5></td>
-    //                     <td><h5>${values.employeeID}</h5></td>
-    //                     <td><h5>${values.Name}</h5></td>
-    //                     <td><h5>${values.Surname}</h5></td>
-    //                     <td><h5>${values.Child_code}</h5></td>
-    //                     <td><h5>${values.Location}</h5></td>
-    //                     <td><h5>${values.Stamp_1}</h5></td>
-    //                     <td><h5>${values.Time_scan}</h5></td>
-    //                 </tr>`;
-    //             });
-
-    //             document.getElementById("table_body").innerHTML = tableData;
-
-    //             document.getElementById("loader").style.display = "none";
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //             alert("Error fetching data");
-    //             document.getElementById("loader").style.display = "none";
-    //         });
-    // });
-
     document.getElementById("exportExcel").addEventListener("click", function() {
         const table = document.getElementById("myTable");
         const rows = table.querySelectorAll("tr");
