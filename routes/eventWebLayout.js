@@ -96,7 +96,6 @@ router.post('/upload/bg', upload.single('image'), async (req, res) => {
     console.log(req.file);
   sql.close();
   const imagePath = `D:/WebLayout-react/public/image/${req.file.originalname}`;
-  //const imagePath = `D:/WebLayout-react/public/image/${req.file.originalname}`;
   const dept = req.body.dept;
   const pool = await sql.connect(config.sql);
   const result = await pool.request()
