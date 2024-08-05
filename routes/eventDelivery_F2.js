@@ -25,20 +25,20 @@ router.get('/web',function(req,res){
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'DeliveryF2'); // Specify the destination directory for uploads
+    cb(null, 'DeliveryF2'); 
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname); // Use the original filename
+    cb(null, file.originalname); 
   }
 });
 
   const upload = multer({ storage: storage });
   
   const config = {
-    server: '192.168.10.114',
+    server: 'XXX.XXX.XX.XXX',
     database: 'Application',
     user: 'sa',
-    password: 'Cyf027065055',
+    password: 'XXXXXXXXXX',
     options: {
       trustedConnection: true,
       enableArithAbort: true,
@@ -63,8 +63,7 @@ const storage = multer.diskStorage({
       const coFolder = path.join(baseUploadDir, dateFolder, Co);
       const lineFolder = path.join(coFolder, Line);
       const linesubFolder = path.join(lineFolder, Linesub);
-  
-      // Create directories if they don't exist
+
       try {
               if (!fs.existsSync(coFolder)) {
                 await fs.promises.mkdir(coFolder, { recursive: true });
