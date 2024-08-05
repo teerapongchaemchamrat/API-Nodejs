@@ -36,14 +36,7 @@ router.get('/BoxCtrl/get/:id', getProductbyId);
 router.put('/BoxCtrl/update/:id', updateProduct);
 router.delete('/BoxCtrl/delete/:id',deleteProduct,);
 
-//router.get('/CtrlBox_Out/get', getAllProductOut);
-//router.post('/addBox_Out', addProductOut);
-//router.get('/CtrlBox_Out/:id', getProductbyIdOut);
-//router.put('/CtrlBox_Out/update/:id', updateProductOut);
-
 router.get('/Vendor/get',getAllVendor);
-//router.delete('/BoxTrans/delete/:id',deleteTransBox);
-//router.put('/BoxTrans/update/:id', TransBoxUpdate);
 router.post('/Vendor/add',addVendor);
 
 router.post('/LogBox/add',addLogBox);
