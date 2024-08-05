@@ -49,7 +49,7 @@ app.post('/login', async (req, res) => {          // login Mobile App using
         const pool = await sql.connect({
             server: "CYF_SERVER_03",
             user: "sa",
-            password: "SysAdm!n",
+            password: "XXXXXXXXXX",
             database: "CYF_LIV_APP",
             options: {
                 trustServerCertificate: true
