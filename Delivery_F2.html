@@ -217,7 +217,7 @@
         let apiUrl = '';
 
         if (coValue !== null && dateValue !== null) {
-            apiUrl = `http://49.0.65.4:3002/delivery/f2/get/photo/${coValue}/${dateValue}`;
+            apiUrl = `http://XXX.XXX.XX.XXX:XXX/delivery/f2/get/photo/${coValue}/${dateValue}`;
         } else {
             // Handle cases where only one parameter is provided
             const params = new URLSearchParams();
@@ -230,7 +230,7 @@
                 params.append('date', dateValue);
             }
 
-            apiUrl = `http://49.0.65.4:3002/delivery/f2/get/photo/or?${params}`;
+            apiUrl = `http://XXX.XXX.XX.XXX:XXX/delivery/f2/get/photo/or?${params}`;
         }
 
         fetch(apiUrl)
@@ -248,9 +248,6 @@
             const defaultImagePath = "DeliveryF2/not-found.jpg";
             ObjectData.forEach((values) => {
 
-                // values.Image1 = values.Image1.replace(/\\\\/g, "\\");
-                // values.Image2 = values.Image2.replace(/\\\\/g, "\\");
-                // values.Image3 = values.Image3.replace(/\\\\/g, "\\");
                 values.Image1 = values.Image1 ? values.Image1.replace(/\\\\/g, "\\") : defaultImagePath;
                 values.Image2 = values.Image2 ? values.Image2.replace(/\\\\/g, "\\") : defaultImagePath;
                 values.Image3 = values.Image3 ? values.Image3.replace(/\\\\/g, "\\") : defaultImagePath;
