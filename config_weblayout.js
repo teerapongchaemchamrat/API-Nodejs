@@ -17,10 +17,10 @@ module.exports = {
     host: HOST,
     url: HOST_URL,
     sql: {
-        server: "192.168.10.114",
+        server: "XXX.XXX.XX.XXX",
         database: "Webapp",
         user: "sa",
-        password: "Cyf027065055",
+        password: "XXXXXXXXXX",
         options: {
             encrypt: sqlEncrypt,
             enableArithAbort: true 
