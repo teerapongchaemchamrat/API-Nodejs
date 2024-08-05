@@ -61,7 +61,7 @@
     let myChart = null;
 
     async function drawChart(){
-        const apiLink = 'http://49.0.65.4:3002/scan/chart/data';
+        const apiLink = 'http://XX.XX.XX.X:XX/scan/chart/data';
 
         const response = await fetch(apiLink)
           
@@ -114,9 +114,6 @@
       config
     );
 
-    // Instantly assign Chart.js version
-    // const chartVersion = document.getElementById('chartVersion');
-    // chartVersion = Chart.version;
   }
 
     drawChart();
